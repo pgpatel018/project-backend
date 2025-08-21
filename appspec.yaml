@@ -1,0 +1,12 @@
+######### appspec.yml #########
+version: 0.0
+os: ubuntu
+files:
+  - source: /
+    destination: /var/www/project #Project path
+    file_exists_behavior: OVERWRITE
+hooks:
+  AfterInstall:
+    - location: script.sh #File which you want to call for deployments, where all commands are added.
+      timeout: 300
+      runas: root
