@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json());
 
 app.use(cors({
-  origin: ["https://parthpatel.academy"], //has to be changed in production
+  origin: "*", //has to be changed in production
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
