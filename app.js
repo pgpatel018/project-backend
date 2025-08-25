@@ -7,11 +7,7 @@ require("dotenv").config();
 const app = express()
 app.use(express.json());
 
-app.use(cors({
-  origin: "*", //has to be changed in production
-  methods: ["GET", "POST", "PUT", "DELETE", "*"],
-  credentials: true
-}));
+app.use(cors());
 
 app.use(
   session({
