@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require("cors");
+const express = require('express'); 
+const cors = require("cors"); 
 const session = require('express-session');
 
 require("dotenv").config();
@@ -7,7 +7,11 @@ require("dotenv").config();
 const app = express()
 app.use(express.json());
 
-app.use(cors({ credentials: true }));
+app.use(cors({
+  origin: ["https://parthpatel.academy"], //has to be changed in production
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(
   session({
@@ -23,7 +27,7 @@ app.use(
 );
 
 /* Backend main page */
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { 
   return res.json("Backend server");
 
 })
@@ -50,7 +54,7 @@ app.use('/profile', profileRouter);
 const adminRouter = require('./routes/adminRouter');
 app.use('/admin', adminRouter);
 
-/* Application port*/
-app.listen(process.env.PORT, () => {
-  console.log("Backend is on port " + process.env.PORT);
+/* Application port*/ 
+app.listen(process.env.PORT, () => {      
+    console.log("Backend is on port " + process.env.PORT);
 })
