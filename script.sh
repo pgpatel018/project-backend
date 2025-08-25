@@ -11,4 +11,4 @@ cd /var/www/project #project path
 npm install
 
 # Restart or start using PM2
-pm2 start app.js
+pm2 restart app || pm2 start app.js
