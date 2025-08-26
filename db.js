@@ -1,35 +1,22 @@
-// db.js
-const mysql = require("mysql");
-const { getParameter } = require("./ssm");
+const mysql = require('mysql');
+require("dotenv").config();
 
-let pool;
+const connection = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.HOST,
+    user: process.env.DEV,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+});
 
-async function initPool() {
-  try {
-    const host = await getParameter("/myapp/db/host", false);
-    const user = await getParameter("/myapp/db/user", false);
-    const password = await getParameter("/myapp/db/password", true);
-    const database = await getParameter("/myapp/db/database", false);
+connection.getConnection(function(err, connection) {
+    if (err) throw err;
+    console.log("Joined to the database");
+});
 
-    pool = mysql.createPool({
-      connectionLimit: 10,
-      host,
-      user,
-      password,
-      database,
-    });
+process.on('exit', function() {
+    connection.end();
+});
 
-    pool.getConnection((err, connection) => {
-      if (err) throw err;
-      console.log("✅ Connected to database");
-      connection.release();
-    });
 
-    return pool;
-  } catch (err) {
-    console.error("❌ DB Pool initialization failed:", err);
-    process.exit(1);
-  }
-}
-
-module.exports = { initPool };
+module.exports = connection;

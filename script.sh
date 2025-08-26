@@ -9,6 +9,6 @@ cd /var/www/project #project path
 
 # Ensure dependencies are installed
 npm install
-npm install @aws-sdk/client-ssm
+
 # Restart or start using PM2
 pm2 restart app || pm2 start app.js
