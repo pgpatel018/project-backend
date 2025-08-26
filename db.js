@@ -24,14 +24,12 @@ async function initPool() {
       console.log("✅ Connected to database");
       connection.release();
     });
+
+    return pool;
   } catch (err) {
     console.error("❌ DB Pool initialization failed:", err);
-    process.exit(1); // stop server if DB cannot connect
+    process.exit(1);
   }
 }
 
-// Initialize immediately
-initPool();
-
-// Export a function returning the pool
-module.exports = () => pool;
+module.exports = { initPool };
