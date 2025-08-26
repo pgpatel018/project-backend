@@ -1,7 +1,7 @@
-const db = require("../db");
+const { getPool } = require("../db");
 
 const answerChecker = async (req, res) => {
-  
+  const db = await getPool();
   const levelID = req.body.id;
   const userID = req.body.logged;
   const answer = req.body.answer.answer;
@@ -60,7 +60,8 @@ const answerChecker = async (req, res) => {
   });
 };
 
-const getLevelsAndDone = (req, res) => {   
+const getLevelsAndDone = async (req, res) => {  
+  const db = await getPool(); 
   userID = req.body.id;
   const q = "SELECT id, title FROM levels";
 

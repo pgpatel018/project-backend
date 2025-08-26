@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs");
-const db = require("../db"); 
+const { getPool } = require("../db"); 
 const emailSender = require("../mailer"); 
 
 
-const userRegister = (req, res) => {
+const userRegister = async (req, res) => {
    
     const name = req.body.name;
     const email = req.body.email;
@@ -25,6 +25,8 @@ const userRegister = (req, res) => {
     if ( password.length < 7) {return res.status(401).json({ message: "Password must have 7+ chars" });} 
     
     if ( password !== passwordRep) {return res.status(401).json({ message: "Passwords are not matching !" });}
+
+    const db = await getPool();
 
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) =>{
         if(error) {

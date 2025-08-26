@@ -1,8 +1,9 @@
-const db = require("../db");
+const { getPool } = require("../db");
 const bcrypt = require("bcryptjs");
 const emailSender = require("../mailer"); 
 
-const getPoints = (req, res) => { 
+const getPoints = async (req, res) => { 
+  const db = await getPool();
   const email = req.body.email;
   const q = "SELECT points FROM users WHERE `email`= ?";
 
@@ -14,6 +15,7 @@ const getPoints = (req, res) => {
 };
 
 const editUser =  async (req, res)  => { 
+  const db = await getPool();
   const id = req.body.user.id;
   const email = req.body.user.email;
   const name = req.body.user.name;

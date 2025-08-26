@@ -1,6 +1,7 @@
-const db = require("../db");  
+const { getPool } = require("../db");  
 
-const getLevels = (req, res) => {   
+const getLevels = async (req, res) => { 
+    const db = await getPool();  
     const q = "SELECT id, title, points FROM levels";
   
     db.query(q,(error, data) => {   
@@ -9,7 +10,8 @@ const getLevels = (req, res) => {
     })
 };
    
-const getLevelByID = (req, res) => {   
+const getLevelByID = async (req, res) => {   
+    const db = await getPool();
     const levelId = req.params.id;
     const q = "SELECT id, title, hint, picture, points, link FROM levels WHERE id = ?";
       

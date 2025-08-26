@@ -1,10 +1,11 @@
 const bcrypt = require("bcryptjs");
-const db = require("../db");
+const { getPool } = require("../db");
 
 require("dotenv").config();
 
 
 const validateUser = async (req, res) => {
+    const db = await getPool();
     const email = req.body.email;
     const password = req.body.password;
 

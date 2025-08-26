@@ -1,7 +1,8 @@
-const db = require("../db");  
+const { getPool } = require("../db");  
 
 
-const getUsers = (req, res) => {   
+const getUsers = async (req, res) => {
+    const db = await getPool();   
     const q = "SELECT id,name,email,points,role FROM users"
   
     db.query(q,(error, data) => {   
@@ -10,7 +11,8 @@ const getUsers = (req, res) => {
     })
   }
   
-const updateUser = (req, res) => { 
+const updateUser = async (req, res) => {
+    const db = await getPool(); 
     const userId = req.params.id;
     const q = "UPDATE users SET `name`= ?, `email`= ?, `password`= ?, `points`= ? WHERE id = ?";
   

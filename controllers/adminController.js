@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs");
-const db = require("../db");  
+const { getPool } = require("../db");  
 const emailSender = require("../mailer"); 
 
-const getLevelsAdmin = (req, res) => {   
+const getLevelsAdmin = async (req, res) => {   
     const q = "SELECT * FROM levels";
+    const db = await getPool();
   
     db.query(q,(error, data) => {   
         if(error) return res.json("error");
@@ -11,9 +12,10 @@ const getLevelsAdmin = (req, res) => {
     })
 };
 
-const getLevelByIDAdmin = (req, res) => {   
+const getLevelByIDAdmin = async (req, res) => {   
     const levelId = req.params.id;
     const q = "SELECT * FROM levels WHERE id = ?";
+    const db = await getPool();
       
     db.query(q, [levelId],(error, data) => {   
         if(error) return res.json("error");
@@ -21,9 +23,10 @@ const getLevelByIDAdmin = (req, res) => {
     })
 };
 
-const deleteLevelAdmin = (req, res) => { 
+const deleteLevelAdmin = async (req, res) => { 
     const levelId = req.params.id;
     const q = "DELETE FROM levels WHERE id = ?";
+    const db = await getPool();
   
     db.query(q,[levelId], (error, data) => {
         if(error) return res.json("Error");
@@ -31,8 +34,8 @@ const deleteLevelAdmin = (req, res) => {
     })
 }; 
 
-const updateLevelAdmin = (req, res) => {
-
+const updateLevelAdmin = async (req, res) => {
+    const db = await getPool();
     const level = {
         title: req.body.title,
         hint: req.body.hint,
@@ -68,8 +71,8 @@ const updateLevelAdmin = (req, res) => {
       });
 };
 
-const createLevelAdmin = (req, res) => {  
-
+const createLevelAdmin = async (req, res) => {  
+    const db = await getPool();
     if (!req.body.title) return res.json({ message: "Level must have a title" });
     if (req.body.hint.length <= 0)  return res.json({ message: "Level must have a hint" });
     if (req.body.points <= 0) return res.json({ message: "Points must be above 0" });
@@ -77,7 +80,7 @@ const createLevelAdmin = (req, res) => {
     
     const qCheck = "SELECT * FROM levels WHERE title = ?";
     const q = "INSERT INTO levels (`title`, `hint`, `picture`, `points`, `pass`, `link`) VALUES (?)";
-  
+    
     const values = [
       req.body.title,
       req.body.hint,
@@ -103,26 +106,27 @@ const createLevelAdmin = (req, res) => {
 
 /// USERS
 
-const getUsersAdmin = (req, res) => {   
+const getUsersAdmin = async (req, res) => {   
     const q = "SELECT id,name,email,points,role FROM users";
-  
+    const db = await getPool();
     db.query(q,(error, data) => {   
         if(error) return res.json("error");
         return res.send(data);
     })
 };
 
-const getUserByIDAdmin = (req, res) => {   
+const getUserByIDAdmin = async (req, res) => {   
     const userId = req.params.id;
     const q = "SELECT * FROM users WHERE id = ?";
-      
+    const db = await getPool();
     db.query(q, [userId],(error, data) => {   
         if(error) return res.json("error");
         return res.json(data);
     })
 };
 
-const deleteUserAdmin = (req, res) => { 
+const deleteUserAdmin = async (req, res) => { 
+    const db = await getPool();
     const userId = req.params.id;
     const q = `
     DELETE user_levels, users
@@ -156,6 +160,7 @@ const deleteUserAdmin = (req, res) => {
 };
 
 const createUserAdmin = async (req, res) => { 
+    const db = await getPool();
     const q = "INSERT INTO users (`name`, `email`, `password`, `points`, `role`) VALUES (?)";
     const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
@@ -192,7 +197,8 @@ const createUserAdmin = async (req, res) => {
     });
 };
 
-const updateUserAdmin = (req, res) => {
+const updateUserAdmin = async (req, res) => {
+    const db = await getPool();
 
     const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     const user = {
