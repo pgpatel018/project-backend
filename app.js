@@ -36,14 +36,27 @@ app.use(
   app.locals.db = getDBPool();
 
   // Routes
-  const userRouter = require("./routes/userRouter");
-  app.use("/user", userRouter);
+/* Routes */
+const levelRouter = require('./routes/levelRouter');
+app.use('/level', levelRouter);
 
-  const registerRouter = require("./routes/registerRouter");
-  app.use("/register", registerRouter);
+const userRouter = require('./routes/userRouter');
+app.use('/user', userRouter);
 
-  const levelRouter = require("./routes/levelRouter");
-  app.use("/level", levelRouter);
+const registerRouter = require('./routes/registerRouter');
+app.use('/register', registerRouter);
+
+const authRouter = require('./routes/authRouter');
+app.use('/auth', authRouter);
+
+const answerRouter = require('./routes/answerRouter');
+app.use('/answer', answerRouter);
+
+const profileRouter = require('./routes/profileRouter');
+app.use('/profile', profileRouter);
+
+const adminRouter = require('./routes/adminRouter');
+app.use('/admin', adminRouter);
 
   // Main route
   app.get("/", (req, res) => res.json("Backend server"));
