@@ -15,6 +15,7 @@ app.use(cors({
 
 const fetchParameter = async () => {
   const SESSION_SECRET = await getSecureSSMParam('session/secret');
+  console.log('session secret: ', SESSION_SECRET);
   return SESSION_SECRET;
 };
 
