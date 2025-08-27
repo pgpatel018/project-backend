@@ -13,10 +13,15 @@ app.use(cors({
   credentials: true
 }));
 
+const fetchParameter = async () => {
+  const SESSION_SECRET = await getSecureSSMParam('session/secret');
+  return SESSION_SECRET;
+};
+
 app.use(
   session({
     key: "user",
-    secret: process.env.SESSION_SECRET,
+    secret: fetchParameter(),
     resave: false,
     saveUninitialized: false,
     cookie: {
