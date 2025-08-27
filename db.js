@@ -70,4 +70,4 @@ async function getPool() {
     return connectionPool;
 }
 
-module.exports = { getPool };
+module.exports = { getPool, getParameters };
