@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: ["https://parthpatel.academy"], // Update for production if needed
+  origin: ["https://ditee.org"], // Update for production if needed
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
