@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: ["https://ditee.org"], // Update for production if needed
+  origin: ["https://d3s2qybl3ey0xa.cloudfront.net"], // Update for production if needed
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
