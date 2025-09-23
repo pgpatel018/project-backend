@@ -1,5 +1,4 @@
-FROM alpine:3.22
-ENV NODE_VERSION 22.19.0
+FROM node:trixie-slim
 
 WORKDIR /app
 
