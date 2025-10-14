@@ -1,4 +1,4 @@
-FROM node:trixie-slim
+FROM 489087763405.dkr.ecr.us-east-1.amazonaws.com/dc-project:latest
 
 WORKDIR /app
 
