@@ -1,4 +1,4 @@
-FROM 489087763405.dkr.ecr.us-east-1.amazonaws.com/dc-project:latest
+FROM node:current-alpine3.23
 
 WORKDIR /app
 
