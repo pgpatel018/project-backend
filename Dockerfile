@@ -7,6 +7,6 @@ COPY . .
 RUN npm i
 RUN npm install mysql2
 
-EXPOSE 5555
+EXPOSE 80
 
 CMD ["node", "app.js"]
