@@ -1,9 +1,13 @@
 const mysql = require('mysql');
 require("dotenv").config();
 
-const connectionString = `mysql://${process.env.DEV}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.DB_PORT}/${process.env.DATABASE}`;
-
-const connection = mysql.createPool(connectionString);
+const connection = mysql.createPool({
+    connectionLimit: 10,
+    host: process.env.HOST,
+    user: process.env.DEV,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+});
 
 connection.getConnection(function(err, connection) {
     if (err) throw err;
