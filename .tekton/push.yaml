@@ -2,6 +2,9 @@ apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
   generateName: backend-pipeline
+  annotations:
+    pipelinesascode.tekton.dev/on-event: push
+    pipelinesascode.tekton.dev/on-target-branch: master
 spec:
   pipelineSpec:
     tasks:
@@ -12,7 +15,7 @@ spec:
           - name: url
             value: https://github.com/pgpatel018/project-backend
           - name: revision
-            value: main
+            value: master
 
       - name: build
         runAfter:
