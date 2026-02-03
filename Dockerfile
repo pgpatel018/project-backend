@@ -10,4 +10,3 @@ RUN npm install mysql2
 EXPOSE 80
 
 CMD ["node", "app.js"]
-#Hello

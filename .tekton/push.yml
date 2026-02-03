@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: backend-pipeline
+spec:
+  pipelineSpec:
+    tasks:
+      - name: clone
+        taskRef:
+          name: git-clone
+        params:
+          - name: url
+            value: https://github.com/pgpatel018/project-backend
+          - name: revision
+            value: main
+
+      - name: build
+        runAfter:
+          - clone
+        taskRef:
+          name: buildah
+        params:
+          - name: IMAGE
+            value: image-registry.openshift-image-registry.svc:5000/parth-pixelque-dev/ctf-backend
